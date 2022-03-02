@@ -5,5 +5,10 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 }
 */
 
-
 // sem začni psát svůj program
+
+let panacek = document.querySelector('#panacek');
+let x = '100px';
+let y = '100px';
+panacek.style.left = x;
+panacek.style.top = y;
