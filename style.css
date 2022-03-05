@@ -1,27 +1,27 @@
 :root {
-	--pozadi: lightskyblue;
-	--score: red;
+  --pozadi: lightskyblue;
+  --score: red;
 }
 
 html {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 *,
 *:after,
 *:before {
-	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
-	margin: 0;
-	padding: 0;
-	height: 100vh;
-	background-color: var(--pozadi);
-	background-repeat: repeat;
-	background-image: url('obrazky/pozadi/geometry.png');
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background-color: var(--pozadi);
+  background-repeat: repeat;
+  background-image: url('obrazky/pozadi/geometry.png');
 
-	/*  vyzkoušej i jiná pozadí :)
+  /*  vyzkoušej i jiná pozadí :)
 	background-image: url('obrazky/pozadi/round.png');
 )	background-image: url('obrazky/pozadi/whirlpool.png');
 	background-image: url('obrazky/pozadi/weather.png');
@@ -32,20 +32,25 @@ body {
 }
 
 #score {
-	position: absolute;
-	top: 50px;
-	left: 50px;
-	font-family: 'Press Start 2P', sans-serif;
-	font-size: 36px;
-	z-index: 999;
-	color: var(--score);
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  font-family: 'Press Start 2P', sans-serif;
+  font-size: 36px;
+  z-index: 999;
+  color: var(--score);
 }
 
 #panacek,
 #mince {
-	position: absolute;
+  position: absolute;
 }
 
 #panacek {
-	z-index: 1;
+  z-index: 1;
+}
+
+#area {
+  width: 500px;
+  height: 500px;
 }
