@@ -129,9 +129,20 @@ function sebraniMince() {
   }
 }
 
+//pocitadlo + zaverecna fanfara
 function zvetsPocitadlo() {
   let pocitadlo = document.getElementById('score').innerText;
-  pocitadlo = parseInt(pocitadlo) + 1;
-  console.log(pocitadlo);
-  document.getElementById('score').textContent = pocitadlo;
+  pocitadlo = parseInt(pocitadlo);
+
+  if (pocitadlo < 5) {
+    pocitadlo = pocitadlo + 1;
+    console.log(pocitadlo);
+    document.getElementById('score').textContent = pocitadlo;
+  } else {
+    document.getElementById('hudba').pause();
+    pocitadlo = 6;
+    document.getElementById('score').innerHTML =
+      'Dosáhl jsi ' + pocitadlo + ' bodů.' + '<br /><br/>' + 'Jsi Vítěz!!!';
+    document.getElementById('zvukfanfara').play();
+  }
 }
