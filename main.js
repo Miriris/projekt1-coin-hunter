@@ -9,10 +9,10 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 
 //prvni umisteni panacka
 let panacek = document.querySelector('#panacek');
-let panacekX = 100;
-let panacekY = 100;
-panacek.style.left = panacekX + 'px';
-panacek.style.top = panacekY + 'px';
+let X = 100;
+let Y = 100;
+panacek.style.left = X + 'px';
+panacek.style.top = Y + 'px';
 
 //nastaveni velikosti okna pro panacka (zatim panacek utika :-( )
 function nastaveniVelikostiOkna() {
@@ -24,7 +24,7 @@ function nastaveniVelikostiOkna() {
 area.addEventListener('resize', nastaveniVelikostiOkna);
 nastaveniVelikostiOkna();
 
-//nastaveni pohybu podle prislusne sipky
+//nastaveni pohybu podle prislusne sipky a obrazku
 document.onkeydown = function zmenaPozicePanacka(e) {
   let event = window.event || e;
 
@@ -37,24 +37,28 @@ document.onkeydown = function zmenaPozicePanacka(e) {
       10 +
       'px';
     panacek.src = 'obrazky/panacek-vlevo.png';
+    sebraniMince();
   } else if (event.keyCode == 38) {
     panacek.style.top =
       parseInt(window.getComputedStyle(panacek).getPropertyValue('top')) -
       10 +
       'px';
     panacek.src = 'obrazky/panacek-nahoru.png';
+    sebraniMince();
   } else if (event.keyCode == 39) {
     panacek.style.left =
       parseInt(window.getComputedStyle(panacek).getPropertyValue('left')) +
       10 +
       'px';
     panacek.src = 'obrazky/panacek-vpravo.png';
+    sebraniMince();
   } else if (event.keyCode == 40) {
     panacek.style.top =
       parseInt(window.getComputedStyle(panacek).getPropertyValue('top')) +
       10 +
       'px';
     panacek.src = 'obrazky/panacek.png';
+    sebraniMince();
   } else {
     null;
   }
@@ -62,8 +66,61 @@ document.onkeydown = function zmenaPozicePanacka(e) {
 };
 
 //nastaveni prvni pozice mince
+
 let mince = document.getElementById('mince');
-let minceX = Math.floor(Math.random() * window.innerWidth);
-let minceY = Math.floor(Math.random() * window.innerHeight);
-mince.style.left = minceX + 'px';
-mince.style.top = minceY + 'px';
+
+function nastaveniPoziceMince() {
+  let minceX_prvni = Math.floor(Math.random() * window.innerWidth);
+  let minceY_prvni = Math.floor(Math.random() * window.innerHeight);
+  mince.style.left = minceX_prvni + 'px';
+  mince.style.top = minceY_prvni + 'px';
+}
+
+nastaveniPoziceMince();
+
+//prunik panacek a mince
+//console.log(mince);
+//console.log(panacek);
+function sebraniMince() {
+  let panacekX = parseInt(
+    window.getComputedStyle(panacek).getPropertyValue('left'),
+  );
+  //console.log(panacekX);
+  let panacekY = parseInt(
+    window.getComputedStyle(panacek).getPropertyValue('top'),
+  );
+  //console.log(panacekY);
+  let panacekSirka = parseInt(
+    window.getComputedStyle(panacek).getPropertyValue('width'),
+  );
+  //console.log(panacekSirka);
+  let panacekVyska = parseInt(
+    window.getComputedStyle(panacek).getPropertyValue('height'),
+  );
+  //console.log(panacekVyska);
+  let minceX = parseInt(
+    window.getComputedStyle(mince).getPropertyValue('left'),
+  );
+  //console.log(minceX);
+  let minceY = parseInt(window.getComputedStyle(mince).getPropertyValue('top'));
+  //console.log(minceY);
+  let minceSirka = parseInt(
+    window.getComputedStyle(mince).getPropertyValue('width'),
+  );
+  let minceVyska = parseInt(
+    window.getComputedStyle(mince).getPropertyValue('height'),
+  );
+
+  if (
+    !(
+      panacekX + panacekSirka < minceX ||
+      minceX + minceSirka < panacekX ||
+      panacekY + panacekVyska < minceY ||
+      minceY + minceVyska < panacekY
+    )
+  ) {
+    // panacek a mince se prekryvaji
+    nastaveniPoziceMince();
+    //console.log('funguje');
+  }
+}
