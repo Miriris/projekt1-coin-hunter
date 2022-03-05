@@ -110,6 +110,7 @@ function sebraniMince() {
   let minceVyska = parseInt(
     window.getComputedStyle(mince).getPropertyValue('height'),
   );
+  let zvukmince = document.getElementById('zvukmince');
 
   if (
     !(
@@ -120,7 +121,17 @@ function sebraniMince() {
     )
   ) {
     // panacek a mince se prekryvaji
+    // prehrani zvuku mince
+    zvukmince.play();
     nastaveniPoziceMince();
+    zvetsPocitadlo();
     //console.log('funguje');
   }
+}
+
+function zvetsPocitadlo() {
+  let pocitadlo = document.getElementById('score').innerText;
+  pocitadlo = parseInt(pocitadlo) + 1;
+  console.log(pocitadlo);
+  document.getElementById('score').textContent = pocitadlo;
 }
