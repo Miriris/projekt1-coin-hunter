@@ -9,71 +9,69 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 
 //prvni umisteni panacka
 let panacek = document.querySelector('#panacek');
-let X = 100;
-let Y = 100;
-panacek.style.left = X + 'px';
-panacek.style.top = Y + 'px';
+let panacekX = 100;
+panacek.style.left = panacekX + 'px';
+let panacekY = 100;
+panacek.style.top = panacekY + 'px';
+let panacekSirka = parseInt(
+  window.getComputedStyle(panacek).getPropertyValue('width'),
+);
+let panacekVyska = parseInt(
+  window.getComputedStyle(panacek).getPropertyValue('height'),
+);
+let mince = document.getElementById('mince');
+let minceX = 50;
+let minceY = 50;
+let minceSirka = parseInt(
+  window.getComputedStyle(mince).getPropertyValue('width'),
+);
+let minceVyska = parseInt(
+  window.getComputedStyle(mince).getPropertyValue('height'),
+);
 
-//nastaveni velikosti okna pro panacka (zatim panacek utika :-( )
-function nastaveniVelikostiOkna() {
-  let area = document.getElementById('area');
-  area.style.width = window.innerWidth + 'px';
-  area.style.height = window.innerHeight + 'px';
-}
-
-area.addEventListener('resize', nastaveniVelikostiOkna);
-nastaveniVelikostiOkna();
-
+//nastaveni velikosti okna pro panacka
 //nastaveni pohybu podle prislusne sipky a obrazku
 document.onkeydown = function zmenaPozicePanacka(e) {
   let event = window.event || e;
-
   // var kod = event.keyCode;
   //console.log(kod);
 
-  if (event.keyCode == 37) {
-    panacek.style.left =
-      parseInt(window.getComputedStyle(panacek).getPropertyValue('left')) -
-      10 +
-      'px';
+  if (event.keyCode == 37 && panacekX > 0) {
+    panacekX = panacekX - 10;
+    panacek.style.left = panacekX + 'px';
     panacek.src = 'obrazky/panacek-vlevo.png';
-    sebraniMince();
-  } else if (event.keyCode == 38) {
-    panacek.style.top =
-      parseInt(window.getComputedStyle(panacek).getPropertyValue('top')) -
-      10 +
-      'px';
+  } else if (event.keyCode == 38 && panacekY > 0) {
+    panacekY = panacekY - 10;
+    panacek.style.top = panacekY + 'px';
     panacek.src = 'obrazky/panacek-nahoru.png';
-    sebraniMince();
-  } else if (event.keyCode == 39) {
-    panacek.style.left =
-      parseInt(window.getComputedStyle(panacek).getPropertyValue('left')) +
-      10 +
-      'px';
+  } else if (
+    event.keyCode == 39 &&
+    panacekX < window.innerWidth - panacekSirka
+  ) {
+    panacekX = panacekX + 10;
+    panacek.style.left = panacekX + 'px';
     panacek.src = 'obrazky/panacek-vpravo.png';
-    sebraniMince();
-  } else if (event.keyCode == 40) {
-    panacek.style.top =
-      parseInt(window.getComputedStyle(panacek).getPropertyValue('top')) +
-      10 +
-      'px';
+  } else if (
+    event.keyCode == 40 &&
+    panacekY < window.innerHeight - panacekVyska
+  ) {
+    panacekY = panacekY + 10;
+    panacek.style.top = panacekY + 'px';
     panacek.src = 'obrazky/panacek.png';
-    sebraniMince();
   } else {
     null;
   }
+  sebraniMince();
   // console.log(event);
 };
 
 //nastaveni prvni pozice mince
 
-let mince = document.getElementById('mince');
-
 function nastaveniPoziceMince() {
-  let minceX_prvni = Math.floor(Math.random() * window.innerWidth);
-  let minceY_prvni = Math.floor(Math.random() * window.innerHeight);
-  mince.style.left = minceX_prvni + 'px';
-  mince.style.top = minceY_prvni + 'px';
+  minceX = Math.floor(Math.random() * (window.innerWidth - minceSirka));
+  minceY = Math.floor(Math.random() * (window.innerHeight - minceVyska));
+  mince.style.left = minceX + 'px';
+  mince.style.top = minceY + 'px';
 }
 
 nastaveniPoziceMince();
@@ -82,35 +80,7 @@ nastaveniPoziceMince();
 //console.log(mince);
 //console.log(panacek);
 function sebraniMince() {
-  let panacekX = parseInt(
-    window.getComputedStyle(panacek).getPropertyValue('left'),
-  );
-  //console.log(panacekX);
-  let panacekY = parseInt(
-    window.getComputedStyle(panacek).getPropertyValue('top'),
-  );
-  //console.log(panacekY);
-  let panacekSirka = parseInt(
-    window.getComputedStyle(panacek).getPropertyValue('width'),
-  );
-  //console.log(panacekSirka);
-  let panacekVyska = parseInt(
-    window.getComputedStyle(panacek).getPropertyValue('height'),
-  );
-  //console.log(panacekVyska);
-  let minceX = parseInt(
-    window.getComputedStyle(mince).getPropertyValue('left'),
-  );
-  //console.log(minceX);
-  let minceY = parseInt(window.getComputedStyle(mince).getPropertyValue('top'));
-  //console.log(minceY);
-  let minceSirka = parseInt(
-    window.getComputedStyle(mince).getPropertyValue('width'),
-  );
-  let minceVyska = parseInt(
-    window.getComputedStyle(mince).getPropertyValue('height'),
-  );
-  let zvukmince = document.getElementById('zvukmince');
+  let zvukMince = document.getElementById('zvukmince');
 
   if (
     !(
@@ -122,7 +92,7 @@ function sebraniMince() {
   ) {
     // panacek a mince se prekryvaji
     // prehrani zvuku mince
-    zvukmince.play();
+    zvukMince.play();
     nastaveniPoziceMince();
     zvetsPocitadlo();
     //console.log('funguje');
@@ -136,7 +106,7 @@ function zvetsPocitadlo() {
 
   if (pocitadlo < 5) {
     pocitadlo = pocitadlo + 1;
-    console.log(pocitadlo);
+    //console.log(pocitadlo);
     document.getElementById('score').textContent = pocitadlo;
   } else {
     document.getElementById('hudba').pause();
@@ -144,5 +114,14 @@ function zvetsPocitadlo() {
     document.getElementById('score').innerHTML =
       'Dosáhl jsi ' + pocitadlo + ' bodů.' + '<br /><br/>' + 'Jsi Vítěz!!!';
     document.getElementById('zvukfanfara').play();
+    oslavVitezstvi();
   }
+}
+
+function oslavVitezstvi() {
+  panacekX = window.innerWidth / 2;
+  panacekY = window.innerHeight / 2;
+  panacek.style.left = panacekX + 'px';
+  panacek.style.top = panacekY + 'px';
+  panacek.src = 'obrazky/panacek.png';
 }
